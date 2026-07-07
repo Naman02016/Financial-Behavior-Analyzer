@@ -1,3 +1,4 @@
+import { loginUser } from "../services/api";
 import { useNavigate, Link } from "react-router-dom";
 import { Eye, Mail, Lock } from "lucide-react";
 
@@ -59,8 +60,12 @@ function Login() {
         </div>
 
         <button
-          onClick={() => navigate("/home")}
-          className="w-full rounded-2xl bg-[#5B3A29] text-white py-4 text-lg font-semibold hover:bg-[#47261A] transition"
+          onClick={async () => {
+            const data = await loginUser();
+            console.log(data);
+            navigate("/home");
+          }}
+           className="w-full rounded-2xl bg-[#5B3A29] text-white py-4 text-lg font-semibold hover:bg-[#47261A] transition"
         >
           Login
         </button>
