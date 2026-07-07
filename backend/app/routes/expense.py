@@ -1,3 +1,4 @@
+from datetime import date
 from fastapi import APIRouter
 from app.schemas.expense import ExpenseCreate
 from app.models.expense import Expense
@@ -31,6 +32,21 @@ def get_expenses():
     db = SessionLocal()
 
     expenses = db.query(Expense).all()
+
+    db.close()
+
+    return expenses
+@router.get("/expenses/today")
+def get_today_expenses():
+    db = SessionLocal()
+
+    today = date.today()
+
+    expenses = (
+        db.query(Expense)
+        .filter(Expense.expense_date == today)
+        .all()
+    )
 
     db.close()
 

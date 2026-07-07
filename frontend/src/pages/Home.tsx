@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { getExpenses } from "../services/expenseApi";
+import { getTodayExpenses } from "../services/expenseApi";
 import BottomNav from "../components/BottomNav";
 function Home() {
   const [expenses, setExpenses] = useState<any[]>([]);
 
 useEffect(() => {
   async function fetchExpenses() {
-    const data = await getExpenses();
+    const data = await getTodayExpenses();
     setExpenses(data);
   }
 
