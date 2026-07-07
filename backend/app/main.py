@@ -1,8 +1,11 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.routes.auth import router as auth_router
+from app.database.database import Base, engine
+from app.models.user import User
 
 app = FastAPI(title="Financial Behavior Analyzer API")
+Base.metadata.create_all(bind=engine)
 
 app.include_router(auth_router)
 
