@@ -2,6 +2,8 @@ from fastapi import APIRouter
 from app.schemas.user import UserCreate
 from app.models.user import User
 from app.database.database import SessionLocal
+from app.schemas.user import UserCreate, UserLogin
+from sqlalchemy.orm import Session
 
 router = APIRouter()
 
@@ -27,7 +29,27 @@ def signup(user: UserCreate):
 
 
 @router.post("/login")
-def login():
+def login(user: UserLogin):
+    db = SessionLocal()
+
+    existing_user = (
+        db.query(User)
+        .filter(User.email == user.email)
+        .first()
+    )
+
+    db.close()
+
+    if existing_user is None:
+        return {
+            "message": "User not found"
+        }
+
+    if existing_user.password != user.password:
+        return {
+            "message": "Incorrect password"
+        }
+
     return {
-        "message": "Login Working"
+        "message": "Login Successful"
     }

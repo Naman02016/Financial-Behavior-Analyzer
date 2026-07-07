@@ -1,9 +1,15 @@
 import { loginUser } from "../services/api";
 import { useNavigate, Link } from "react-router-dom";
 import { Eye, Mail, Lock } from "lucide-react";
+import { useState } from "react";
+
 
 function Login() {
   const navigate = useNavigate();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   return (
     <div className="min-h-screen bg-[#F5EEE6] flex items-center justify-center px-6">
@@ -33,6 +39,8 @@ function Login() {
           <input
             type="email"
             placeholder="Enter your email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             className="ml-3 w-full bg-transparent outline-none"
           />
         </div>
@@ -47,6 +55,8 @@ function Login() {
           <input
             type="password"
             placeholder="Enter your password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             className="ml-3 w-full bg-transparent outline-none"
           />
 
@@ -61,14 +71,23 @@ function Login() {
 
         <button
           onClick={async () => {
-            const data = await loginUser();
-            console.log(data);
-            navigate("/home");
+            const result = await loginUser(email, password);
+
+            if (result.message === "Login Successful") {
+              navigate("/home");
+            } else {
+              setError(result.message);
+            }
           }}
-           className="w-full rounded-2xl bg-[#5B3A29] text-white py-4 text-lg font-semibold hover:bg-[#47261A] transition"
+          className="w-full rounded-2xl bg-[#5B3A29] text-white py-4 text-lg font-semibold hover:bg-[#47261A] transition"
         >
           Login
         </button>
+        {error && (
+          <p className="mt-4 text-center text-red-600">
+            {error}
+          </p>
+        )}
 
         <div className="flex items-center my-8">
           <div className="flex-1 h-px bg-[#E5D6C7]"></div>
