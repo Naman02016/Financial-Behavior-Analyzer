@@ -26,3 +26,12 @@ def add_expense(expense: ExpenseCreate):
     return {
         "message": "Expense Added Successfully"
     }
+@router.get("/expenses")
+def get_expenses():
+    db = SessionLocal()
+
+    expenses = db.query(Expense).all()
+
+    db.close()
+
+    return expenses

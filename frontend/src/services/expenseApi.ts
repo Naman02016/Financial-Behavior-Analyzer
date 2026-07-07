@@ -17,3 +17,7 @@ export async function addExpense(expense: {
 
   return response.json();
 }
+export async function getExpenses() {
+  const response = await fetch("http://127.0.0.1:8000/expenses");
+  return response.json();
+}
