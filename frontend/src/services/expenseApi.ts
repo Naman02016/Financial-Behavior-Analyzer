@@ -17,26 +17,32 @@ export async function addExpense(expense: {
 
   return response.json();
 }
+
 export async function getExpenses() {
-  const response = await fetch("http://127.0.0.1:8000/expenses");
+  const response = await fetch(`${API_URL}/expenses`);
   return response.json();
 }
+
 export async function getTodayExpenses() {
-  const response = await fetch("http://127.0.0.1:8000/expenses/today");
+  const response = await fetch(`${API_URL}/expenses/today`);
   return response.json();
 }
+
+export async function getInsight() {
+  const response = await fetch(`${API_URL}/analytics/insight`);
+  return response.json();
+}
+
 export async function deleteExpense(id: number) {
-  const response = await fetch(
-    `http://127.0.0.1:8000/expense/${id}`,
-    {
-      method: "DELETE",
-    }
-  );
+  const response = await fetch(`${API_URL}/expense/${id}`, {
+    method: "DELETE",
+  });
 
   return response.json();
 }
+
 export async function getExpense(id: number) {
-  const response = await fetch(`http://127.0.0.1:8000/expense/${id}`);
+  const response = await fetch(`${API_URL}/expense/${id}`);
   return response.json();
 }
 
@@ -50,7 +56,7 @@ export async function updateExpense(
     description: string;
   }
 ) {
-  const response = await fetch(`http://127.0.0.1:8000/expense/${id}`, {
+  const response = await fetch(`${API_URL}/expense/${id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
