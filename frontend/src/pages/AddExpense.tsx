@@ -1,8 +1,16 @@
-import { useState } from "react";
-import { addExpense } from "../services/expenseApi";
+import { useEffect, useState } from "react";
+import {
+  addExpense,
+  getExpense,
+  updateExpense,
+} from "../services/expenseApi";
 import BottomNav from "../components/BottomNav";
+import { useNavigate, useParams } from "react-router-dom";
 
 function AddExpense() {
+  const navigate = useNavigate();
+  const { id } = useParams();
+
   const [amount, setAmount] = useState("");
   const [category, setCategory] = useState("Food");
   const [expenseDate, setExpenseDate] = useState("");
@@ -10,16 +18,49 @@ function AddExpense() {
   const [description, setDescription] = useState("");
   const [message, setMessage] = useState("");
 
+  useEffect(() => {
+    if (!id) return;
+
+    async function loadExpense() {
+      const expense = await getExpense(Number(id));
+
+      setAmount(expense.amount.toString());
+      setCategory(expense.category);
+      setExpenseDate(expense.expense_date);
+      setExpenseTime(expense.expense_time);
+      setDescription(expense.description);
+    }
+
+    loadExpense();
+  }, [id]);
+
   const handleSaveExpense = async () => {
-    const result = await addExpense({
-      amount: Number(amount),
-      category,
-      expense_date: expenseDate,
-      expense_time: expenseTime,
-      description,
-    });
+    let result;
+
+    if (id) {
+      result = await updateExpense(Number(id), {
+        amount: Number(amount),
+        category,
+        expense_date: expenseDate,
+        expense_time: expenseTime,
+        description,
+      });
+    } else {
+      result = await addExpense({
+        amount: Number(amount),
+        category,
+        expense_date: expenseDate,
+        expense_time: expenseTime,
+        description,
+      });
+    }
 
     setMessage(result.message);
+
+    if (id) {
+      navigate("/expenses");
+      return;
+    }
 
     setAmount("");
     setCategory("Food");
@@ -33,7 +74,7 @@ function AddExpense() {
       <div className="max-w-md mx-auto px-6 pt-10">
 
         <h1 className="text-3xl font-bold text-[#4A2F24] mb-8">
-          Add Expense
+          {id ? "Edit Expense" : "Add Expense"}
         </h1>
 
         <label className="block mb-2 text-[#4A2F24] font-medium">
@@ -109,7 +150,7 @@ function AddExpense() {
           onClick={handleSaveExpense}
           className="w-full rounded-2xl bg-[#5B3A29] text-white py-4 text-lg font-semibold hover:bg-[#47261A] transition"
         >
-          Save Expense
+          {id ? "Update Expense" : "Save Expense"}
         </button>
 
         {message && (

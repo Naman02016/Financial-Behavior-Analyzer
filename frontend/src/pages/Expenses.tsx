@@ -1,8 +1,11 @@
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getExpenses, deleteExpense } from "../services/expenseApi";
 import BottomNav from "../components/BottomNav";
 
 function Expenses() {
+  const navigate = useNavigate();
+
   const [expenses, setExpenses] = useState<any[]>([]);
 
   const fetchExpenses = async () => {
@@ -24,6 +27,7 @@ function Expenses() {
   return (
     <div className="min-h-screen bg-[#F5EEE6] pb-28">
       <div className="max-w-md mx-auto px-6 pt-10">
+
         <h1 className="text-3xl font-bold text-[#4A2F24] mb-8">
           Expenses
         </h1>
@@ -47,6 +51,7 @@ function Expenses() {
               className="bg-[#FCF8F3] rounded-2xl shadow-lg p-5 mb-4"
             >
               <div className="flex justify-between items-center">
+
                 <div>
                   <h2 className="text-lg font-semibold text-[#4A2F24]">
                     {expense.category}
@@ -62,21 +67,32 @@ function Expenses() {
                 </div>
 
                 <div className="text-right">
+
                   <p className="text-xl font-bold text-[#5B3A29]">
                     ₹{expense.amount}
                   </p>
 
                   <button
+                    onClick={() => navigate(`/edit-expense/${expense.id}`)}
+                    className="text-blue-600 text-sm mt-3 hover:underline block"
+                  >
+                    Edit
+                  </button>
+
+                  <button
                     onClick={() => handleDelete(expense.id)}
-                    className="text-red-500 text-sm mt-3 hover:underline"
+                    className="text-red-500 text-sm mt-2 hover:underline block"
                   >
                     Delete
                   </button>
+
                 </div>
+
               </div>
             </div>
           ))
         )}
+
       </div>
 
       <BottomNav />

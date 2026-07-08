@@ -35,3 +35,28 @@ export async function deleteExpense(id: number) {
 
   return response.json();
 }
+export async function getExpense(id: number) {
+  const response = await fetch(`http://127.0.0.1:8000/expense/${id}`);
+  return response.json();
+}
+
+export async function updateExpense(
+  id: number,
+  expense: {
+    amount: number;
+    category: string;
+    expense_date: string;
+    expense_time: string;
+    description: string;
+  }
+) {
+  const response = await fetch(`http://127.0.0.1:8000/expense/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(expense),
+  });
+
+  return response.json();
+}

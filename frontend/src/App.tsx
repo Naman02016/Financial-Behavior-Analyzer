@@ -23,6 +23,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
 
         <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path="/edit-expense/:id" element={<AddExpense />} />
       </Routes>
     </BrowserRouter>
   );

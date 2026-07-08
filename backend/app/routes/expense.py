@@ -111,3 +111,21 @@ def update_expense(expense_id: int, updated_expense: ExpenseCreate):
     return {
         "message": "Expense updated successfully"
     }
+@router.get("/expense/{expense_id}")
+def get_expense(expense_id: int):
+    db = SessionLocal()
+
+    expense = (
+        db.query(Expense)
+        .filter(Expense.id == expense_id)
+        .first()
+    )
+
+    db.close()
+
+    if expense is None:
+        return {
+            "message": "Expense not found"
+        }
+
+    return expense
