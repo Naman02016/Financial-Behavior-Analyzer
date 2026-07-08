@@ -1,0 +1,45 @@
+# Python
+
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual Environment
+
+venv/
+.env
+
+# Jupyter
+
+.ipynb_checkpoints/
+
+# ML Models (optional)
+# *.pkl
+
+# VS Code
+
+.vscode/
+
+# Database
+
+*.db
+
+# Logs
+
+*.log
+
+# Node
+
+node_modules/
+
+dist/
+
+# Build
+
+build/
+
+# OS
+
+.DS_Store
+Thumbs.db
