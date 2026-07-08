@@ -25,3 +25,13 @@ export async function getTodayExpenses() {
   const response = await fetch("http://127.0.0.1:8000/expenses/today");
   return response.json();
 }
+export async function deleteExpense(id: number) {
+  const response = await fetch(
+    `http://127.0.0.1:8000/expense/${id}`,
+    {
+      method: "DELETE",
+    }
+  );
+
+  return response.json();
+}
