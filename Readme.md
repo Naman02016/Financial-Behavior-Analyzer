@@ -116,48 +116,49 @@ npm run dev
 
 ## 🔐 Login Page
 
-screenshots/login.png.png
+![Login](screenshots/login.png)
+
 ---
 
 ## 📝 Signup Page
 
-screenshots/signup.png.png
+![Signup](screenshots/signup.png)
 
 ---
 
 ## 🏠 Dashboard
 
-screenshots/home-dashboard.png.png
+![Dashboard](screenshots/home-dashboard.png)
 
 ---
 
 ## ➕ Add Expense
 
-screenshots/add-expense.png.png
+![Add Expense](screenshots/add-expense.png)
 
 ---
 
 ## 📋 Expenses
 
-screenshots/expenses.png.png
+![Expenses](screenshots/expenses.png)
 
 ---
 
 ## ✏️ Edit Expense
 
-screenshots/edit-expense.png.png
+![Edit Expense](screenshots/edit-expense.png)
 
 ---
 
 ## 🤖 AI Insight
 
-screenshots/ai-insight.png.png
+![AI Insight](screenshots/ai-insight.png)
 
 ---
 
 ## 📡 Swagger API
 
-screenshots/swagger.png.png
+![Swagger](screenshots/swagger.png)
 
 ---
 
