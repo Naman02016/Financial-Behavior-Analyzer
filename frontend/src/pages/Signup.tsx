@@ -1,8 +1,55 @@
+import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Eye, Mail, Lock, User } from "lucide-react";
 
+const API_URL = "http://127.0.0.1:8000";
+
 function Signup() {
   const navigate = useNavigate();
+
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const handleSignup = async () => {
+    if (!name || !email || !password || !confirmPassword) {
+      alert("Please fill all fields.");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      alert("Passwords do not match.");
+      return;
+    }
+
+    try {
+      const response = await fetch(`${API_URL}/signup`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          full_name: name,
+          email: email,
+          password: password,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        alert(data.detail || data.message || "Signup failed.");
+        return;
+      }
+
+      alert("Account created successfully!");
+      navigate("/");
+    } catch (error) {
+      console.error(error);
+      alert("Unable to connect to server.");
+    }
+  };
 
   return (
     <div className="min-h-screen bg-[#F5EEE6] flex items-center justify-center px-6">
@@ -32,6 +79,8 @@ function Signup() {
           <input
             type="text"
             placeholder="Enter your name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             className="ml-3 w-full bg-transparent outline-none"
           />
         </div>
@@ -45,6 +94,8 @@ function Signup() {
           <input
             type="email"
             placeholder="Enter your email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             className="ml-3 w-full bg-transparent outline-none"
           />
         </div>
@@ -58,9 +109,11 @@ function Signup() {
           <input
             type="password"
             placeholder="Create password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             className="ml-3 w-full bg-transparent outline-none"
           />
-          <Eye className="text-[#8A7568] cursor-pointer" size={20} />
+          <Eye className="text-[#8A7568]" size={20} />
         </div>
 
         <label className="block mb-2 text-[#4A2F24] font-medium">
@@ -72,13 +125,15 @@ function Signup() {
           <input
             type="password"
             placeholder="Confirm password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
             className="ml-3 w-full bg-transparent outline-none"
           />
-          <Eye className="text-[#8A7568] cursor-pointer" size={20} />
+          <Eye className="text-[#8A7568]" size={20} />
         </div>
 
         <button
-          onClick={() => navigate("/")}
+          onClick={handleSignup}
           className="w-full rounded-2xl bg-[#5B3A29] text-white py-4 text-lg font-semibold hover:bg-[#47261A] transition mt-8"
         >
           Create Account
